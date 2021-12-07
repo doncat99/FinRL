@@ -73,7 +73,7 @@ class DRLAgent:
 
         return model, model_config
 
-    def train_model(self, model, model_name, model_config, total_episodes=100, init_ray=True):
+    def train_model(self, model, model_name, model_config, agent_path, total_episodes=100, init_ray=True):
         if model_name not in MODELS:
             raise NotImplementedError("NotImplementedError")
         if init_ray:
@@ -98,8 +98,7 @@ class DRLAgent:
         ray.shutdown()
 
         # save the trained model
-        cwd = "./test_" + str(model_name)
-        trainer.save(cwd)
+        trainer.save(agent_path)
 
         return trainer
 
