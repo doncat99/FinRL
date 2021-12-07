@@ -54,7 +54,7 @@ def backtest_plot(
     df["date"] = pd.to_datetime(df["date"])
     test_returns = get_daily_return(df, value_col_name=value_col_name)
 
-    if not baseline_df:
+    if baseline_df is None:
         baseline_df = get_baseline(
             ticker=baseline_ticker, start=baseline_start, end=baseline_end
         )
