@@ -43,6 +43,7 @@ def backtest_stats(account_value, value_col_name="account_value"):
 
 def backtest_plot(
     account_value,
+    baseline_df=None,
     baseline_start=config.START_TRADE_DATE,
     baseline_end=config.END_DATE,
     baseline_ticker="^DJI",
@@ -53,9 +54,10 @@ def backtest_plot(
     df["date"] = pd.to_datetime(df["date"])
     test_returns = get_daily_return(df, value_col_name=value_col_name)
 
-    baseline_df = get_baseline(
-        ticker=baseline_ticker, start=baseline_start, end=baseline_end
-    )
+    if not baseline_df:
+        baseline_df = get_baseline(
+            ticker=baseline_ticker, start=baseline_start, end=baseline_end
+        )
 
     baseline_df["date"] = pd.to_datetime(baseline_df["date"], format="%Y-%m-%d")
     baseline_df = pd.merge(df[["date"]], baseline_df, how="left", on="date")
